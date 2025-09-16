@@ -1,0 +1,18 @@
+# Node / build stuff (not needed for plain HTML/JS, but good safety)
+node_modules/
+dist/
+build/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# VS Code settings
+.vscode/
+*.code-workspace
+
+# Environment files (if you ever add them)
+.env
