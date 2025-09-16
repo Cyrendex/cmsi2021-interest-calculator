@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Crafted Compound Interest Calculator</title>
+
+  <!-- Google Fonts: pixel-y title + clean body -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+  <link rel="icon" href="assets/barrier.png" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- Page grid: header / main / footer -->
+  <div class="page">
+    <header class="site-header">
+      <div class="header-inner">
+        <h1 class="title">crafted compound interest calculator</h1>
+        <p class="tagline">don't let your emeralds build dust in your chest</p>
+      </div>
+    </header>
+
+    <main class="content">
+      <!-- Calculator + Result laid out like an inventory -->
+      <section class="inventory-card">
+        <h2 class="sr-only">Calculator</h2>
+
+        <div class="inventory">
+          <!-- LEFT: Inputs -->
+          <form id="calcForm" class="slot panel" aria-label="Calculator Inputs">
+            <h3 class="panel-title">ingredients</h3>
+
+            <label for="principal">Principal ($)</label>
+            <input type="number" id="principal" min="0" step="0.01" placeholder="e.g. 1000" required />
+
+            <div class="group">
+              <label for="rate">Interest Rate (%)</label>
+              <div class="slider-row">
+                <input type="range" id="rate" min="0" max="25" step="0.1" value="5" />
+                <output id="rateOut" for="rate">5.0%</output>
+              </div>
+            </div>
+
+            <label for="frequency">Compound Frequency</label>
+            <select id="frequency">
+              <option value="1">Annually (1)</option>
+              <option value="2">Semi-Annually (2)</option>
+              <option value="4">Quarterly (4)</option>
+              <option value="12" selected>Monthly (12)</option>
+              <option value="24">Semi-Monthly (24)</option>
+              <option value="26">Bi-Weekly (26)</option>
+              <option value="52">Weekly (52)</option>
+              <option value="365">Daily (365)</option>
+            </select>
+
+            <label for="time">Time (years)</label>
+            <input type="number" id="time" min="0" step="0.5" placeholder="e.g. 10" required />
+
+            <fieldset class="fieldset">
+              <legend>Rounding</legend>
+              <label class="radio"><input type="radio" name="round" value="2" checked /> 2 decimals</label>
+              <label class="radio"><input type="radio" name="round" value="0" /> whole dollars</label>
+            </fieldset>
+
+            <label class="check">
+              <input type="checkbox" id="showBreakdown" />
+              show yearly breakdown
+            </label>
+
+            <button type="submit" class="btn">craft result</button>
+          </form>
+
+          <!-- RIGHT: Result output -->
+          <div class="slot panel" aria-live="polite" id="outputPanel">
+            <h3 class="panel-title">output</h3>
+
+            <div id="result" class="result"></div>
+            <div id="breakdown" class="breakdown"></div>
+
+            <!-- Shown only when invalid | not possible in regular use due to input field restrictions -->
+            <div id="nanBlock" class="nan-block" hidden>
+              <img src="assets/barrier.png" alt="Invalid (barrier block)" />
+              <p class="error">invalid inputs, can’t craft that!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>
+        Hosted on
+        <a id="ghLink" href="#" rel="noopener" target="_blank">GitHub Pages</a>.
+      </p>
+    </footer>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
