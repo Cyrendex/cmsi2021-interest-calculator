@@ -1,0 +1,292 @@
+:root{
+  --bg-dim: rgba(0,0,0,.45);
+  --stone: #8b8b8b;
+  --stone-light: #b5b5b5;
+  --accent: #34c759;
+  --accent-dark: #2aa34a;
+  --slot: #c6c6c6;
+  --slot-border: #3f3f3f;
+  --text: #e9f0ea;
+  --muted: #bcd0c2;
+}
+
+*{ box-sizing: border-box; }
+html,body{ height:100%; }
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: var(--text);
+
+  /* Minecraft scenery background */
+  background: 
+    linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), /* dark overlay */
+    url("../assets/bg.jpeg") center/cover fixed no-repeat;
+
+  min-height: 100vh;
+}
+
+
+/* Page grid */
+.page{
+  display:grid;
+  grid-template-rows: auto 1fr auto;
+  min-height:100dvh;
+}
+
+/* Header: creeper-esque checker */
+.site-header{
+  background:
+    /* fallback if no tile image: CSS checker */
+    repeating-linear-gradient(45deg, #3aa64b 0 16px, #2e8f3e 16px 32px);
+  position: relative;
+  isolation: isolate;
+  box-shadow: inset 0 -8px 0 rgba(0,0,0,.25);
+}
+.site-header::after{
+  /* subtle dark glaze for contrast over bright green */
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(to bottom, rgba(0,0,0,.15), rgba(0,0,0,.35));
+  z-index:0;
+}
+.header-inner{
+  position: relative; z-index:1;
+  padding: 2.5rem 1.25rem 2rem;
+  text-align:center;
+}
+.title{
+  font-family: "Press Start 2P", monospace;
+  font-size: clamp(1.2rem, 2.2vw + 0.4rem, 2.4rem);
+  margin:0 0 .5rem;
+  text-shadow: 3px 3px 0 #1b5a26, 6px 6px 0 rgba(0,0,0,.25);
+}
+.tagline{
+  margin:0;
+  color: var(--muted);
+  font-size: .95rem;
+}
+
+/* Content area */
+.content{
+  padding: 2rem 1rem 3rem;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+}
+
+/* Card with slight hover transform */
+.inventory-card{
+  width:min(1100px, 95vw);
+  background: rgba(40,40,40,.6);
+  border: 3px solid #262626;
+  border-radius: 14px;
+  padding: 1rem;
+  box-shadow:
+    0 8px 22px rgba(0,0,0,.45),
+    inset 0 0 0 2px rgba(255,255,255,.04);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.inventory-card:hover{
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 28px rgba(0,0,0,.55),
+    inset 0 0 0 2px rgba(255,255,255,.05);
+}
+
+/* Inventory: 2 slots like a little crafting layout */
+.inventory{
+  display: grid;
+  /* auto-fit packs items; each column is at least 340px, otherwise it shares space */
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 1rem;
+  align-items: stretch; /* ensure equal height tracks */
+}
+
+
+/* Slots styled like inventory boxes */
+.slot{
+  background: var(--slot);
+  border: 3px solid var(--slot-border);
+  border-radius: 10px;
+  /* remove or shrink this: */
+  /* min-height: 320px; */
+  min-height: 0;
+  padding: .9rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.3),
+    inset 0 -2px 0 rgba(0,0,0,.25);
+}
+
+/* Inputs panel uses FLEX to lay out form elements nicely */
+.panel{
+  background:
+    linear-gradient(180deg, #d5d5d5, #bdbdbd 60%, #b1b1b1);
+}
+.panel-title{
+  margin: 0 0 .75rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  font-size: .95rem;
+}
+
+#calcForm{
+  display:flex;
+  flex-direction:column;
+  gap: .6rem;
+}
+
+label{ color:#1f1f1f; font-weight:600; }
+input[type="number"],
+select{
+  padding:.6rem .7rem;
+  border:2px solid #5b5b5b;
+  border-radius:8px;
+  background:#efefef;
+  color:#111;
+  outline:none;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+input[type="number"]:focus,
+select:focus{
+  border-color:#2b2b2b;
+  box-shadow: 0 0 0 4px rgba(42,42,42,.12);
+}
+
+/* Slider row */
+.group .slider-row{
+  display:flex;
+  align-items:center;
+  gap:.7rem;
+}
+#rate{ width:100%; }
+#rateOut{
+  min-width: 4.2rem;
+  text-align:right;
+  font-variant-numeric: tabular-nums;
+  color:#222;
+  font-weight:700;
+}
+
+/* Radios / checkbox */
+.fieldset{
+  border:2px dashed #7b7b7b;
+  border-radius:10px;
+  padding:.6rem .7rem;
+  margin-top:.2rem;
+  background: rgba(255,255,255,.5);
+}
+.fieldset legend{ padding: 0 .3rem; color:#222; }
+.radio, .check{ display:flex; align-items:center; gap:.5rem; color:#1f1f1f; }
+
+/* Button */
+.btn{
+  margin-top:.4rem;
+  align-self:flex-start;
+  background: linear-gradient(#4cd969, #2fa64a);
+  color:white;
+  padding:.7rem 1rem;
+  border:none;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+  transition: transform .12s ease, filter .12s ease, box-shadow .12s ease;
+  box-shadow: 0 3px 0 #1c6f32, 0 10px 18px rgba(0,0,0,.15);
+  margin-bottom:.1rem;
+}
+.btn:hover{ filter: brightness(1.06); transform: translateY(-1px); }
+.btn:active{ transform: translateY(0); filter: brightness(.95); }
+
+/* Output */
+#outputPanel{
+  background:
+    linear-gradient(180deg, #d5d5d5, #bdbdbd 60%, #b1b1b1);
+}
+.result{
+  background:#f6f6f6;
+  color:#111;
+  border-radius:8px;
+  padding:.8rem;
+  border:2px solid #5b5b5b;
+}
+.result .kv{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:.5rem .9rem;
+}
+.result strong{ color:#000; }
+
+.breakdown{
+  margin-top:.75rem;
+  background:#f6f6f6;
+  color:#111;
+  border-radius:8px;
+  padding:.8rem;
+  border:2px solid #5b5b5b;
+  max-height: 260px;
+  overflow:auto;
+}
+.table{
+  width:100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+.table th, .table td{
+  border-bottom:1px solid #d0d0d0;
+  padding:.45rem .35rem;
+  text-align:right;
+}
+.table th:first-child, .table td:first-child{ text-align:left; }
+
+/* NaN barrier */
+.nan-block{
+  margin-top:.8rem;
+  /* hide by default; the script toggles the [hidden] attribute */
+  display: none;
+  gap:.6rem;
+  align-items:center;
+  background:#fff2f2;
+  border:2px solid #ffbdbd;
+  border-radius:8px;
+  padding:.6rem .7rem;
+}
+/* Show the block only when the element does NOT have the [hidden] attribute.
+   This keeps the presentation controlled by the HTML/JS hidden property instead
+   of author styles overriding it. */
+.nan-block:not([hidden]){
+  display: flex;
+}
+.nan-block img{ width:32px; height:32px; image-rendering: pixelated; }
+.error{ color:#b00020; font-weight:700; }
+
+/* Footer */
+.site-footer{
+  text-align:center;
+  padding: 1rem;
+  color: #dfe9e2;
+  background: linear-gradient(180deg, transparent, rgba(0,0,0,.35));
+}
+.site-footer a{
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: border-color .15s ease;
+}
+.site-footer a:hover{ border-color: var(--accent-dark); }
+
+/* A11y helpers */
+.sr-only{
+  position:absolute !important;
+  height:1px;width:1px;
+  overflow:hidden;clip:rect(1px,1px,1px,1px);
+  white-space:nowrap;border:0;padding:0;margin:-1px;
+}
+
+/* Narrow screens: stack inventory slots */
+@media (max-width: 900px){
+  .inventory{ grid-template-columns: 1fr; }
+}
