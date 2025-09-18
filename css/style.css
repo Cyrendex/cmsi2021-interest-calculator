@@ -1,31 +1,33 @@
 :root{
   --bg-dim: rgba(0,0,0,.45);
-  --stone: #8b8b8b;
-  --stone-light: #b5b5b5;
-  --accent: #34c759;
-  --accent-dark: #2aa34a;
   --slot: #c6c6c6;
   --slot-border: #3f3f3f;
   --text: #e9f0ea;
   --muted: #bcd0c2;
+  --accent: #34c759;
+  --accent-dark: #2aa34a;
 }
 
 *{ box-sizing: border-box; }
 html,body{ height:100%; }
 
-body {
-  margin: 0;
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  color: var(--text);
-
-  /* Minecraft scenery background */
-  background: 
-    linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), /* dark overlay */
-    url("../assets/bg.jpeg") center/cover fixed no-repeat;
-
-  min-height: 100vh;
+/* Local font (title) */
+@font-face{
+  font-family: 'Minecraft';
+  src: url('../assets/MinecraftRegular-Bmg3.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
 }
 
+body{
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--text);
+  background:
+    linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+    url("../assets/bg.jpeg") center/cover fixed no-repeat;
+  min-height: 100vh;
+}
 
 /* Page grid */
 .page{
@@ -34,17 +36,14 @@ body {
   min-height:100dvh;
 }
 
-/* Header: creeper-esque checker */
+/* Header */
 .site-header{
-  background:
-    /* fallback if no tile image: CSS checker */
-    repeating-linear-gradient(45deg, #3aa64b 0 16px, #2e8f3e 16px 32px);
+  background: repeating-linear-gradient(45deg, #3aa64b 0 16px, #2e8f3e 16px 32px);
   position: relative;
   isolation: isolate;
   box-shadow: inset 0 -8px 0 rgba(0,0,0,.25);
 }
 .site-header::after{
-  /* subtle dark glaze for contrast over bright green */
   content:"";
   position:absolute; inset:0;
   background: linear-gradient(to bottom, rgba(0,0,0,.15), rgba(0,0,0,.35));
@@ -56,7 +55,7 @@ body {
   text-align:center;
 }
 .title{
-  font-family: "Press Start 2P", monospace;
+  font-family: "Minecraft", monospace;
   font-size: clamp(1.2rem, 2.2vw + 0.4rem, 2.4rem);
   margin:0 0 .5rem;
   text-shadow: 3px 3px 0 #1b5a26, 6px 6px 0 rgba(0,0,0,.25);
@@ -67,7 +66,7 @@ body {
   font-size: .95rem;
 }
 
-/* Content area */
+/* Main content */
 .content{
   padding: 2rem 1rem 3rem;
   display:flex;
@@ -75,7 +74,7 @@ body {
   justify-content:center;
 }
 
-/* Card with slight hover transform */
+/* Card */
 .inventory-card{
   width:min(1100px, 95vw);
   background: rgba(40,40,40,.6);
@@ -94,23 +93,19 @@ body {
     inset 0 0 0 2px rgba(255,255,255,.05);
 }
 
-/* Inventory: 2 slots like a little crafting layout */
+/* Inventory area (two slots; stacks on narrow) */
 .inventory{
   display: grid;
-  /* auto-fit packs items; each column is at least 340px, otherwise it shares space */
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: 1rem;
-  align-items: stretch; /* ensure equal height tracks */
+  align-items: stretch;
 }
 
-
-/* Slots styled like inventory boxes */
+/* Slots */
 .slot{
   background: var(--slot);
   border: 3px solid var(--slot-border);
   border-radius: 10px;
-  /* remove or shrink this: */
-  /* min-height: 320px; */
   min-height: 0;
   padding: .9rem;
   display: flex;
@@ -120,10 +115,9 @@ body {
     inset 0 -2px 0 rgba(0,0,0,.25);
 }
 
-/* Inputs panel uses FLEX to lay out form elements nicely */
+/* Panels */
 .panel{
-  background:
-    linear-gradient(180deg, #d5d5d5, #bdbdbd 60%, #b1b1b1);
+  background: linear-gradient(180deg, #d5d5d5, #bdbdbd 60%, #b1b1b1);
 }
 .panel-title{
   margin: 0 0 .75rem;
@@ -134,15 +128,14 @@ body {
   font-size: .95rem;
 }
 
+/* Form */
 #calcForm{
   display:flex;
   flex-direction:column;
   gap: .6rem;
 }
-
 label{ color:#1f1f1f; font-weight:600; }
-input[type="number"],
-select{
+input[type="number"], select{
   padding:.6rem .7rem;
   border:2px solid #5b5b5b;
   border-radius:8px;
@@ -151,13 +144,12 @@ select{
   outline:none;
   transition: border-color .15s ease, box-shadow .15s ease;
 }
-input[type="number"]:focus,
-select:focus{
+input[type="number"]:focus, select:focus{
   border-color:#2b2b2b;
   box-shadow: 0 0 0 4px rgba(42,42,42,.12);
 }
 
-/* Slider row */
+/* Slider */
 .group .slider-row{
   display:flex;
   align-items:center;
@@ -172,7 +164,7 @@ select:focus{
   font-weight:700;
 }
 
-/* Radios / checkbox */
+/* Rounding & checkbox */
 .fieldset{
   border:2px dashed #7b7b7b;
   border-radius:10px;
@@ -201,10 +193,9 @@ select:focus{
 .btn:hover{ filter: brightness(1.06); transform: translateY(-1px); }
 .btn:active{ transform: translateY(0); filter: brightness(.95); }
 
-/* Output */
+/* Output + breakdown */
 #outputPanel{
-  background:
-    linear-gradient(180deg, #d5d5d5, #bdbdbd 60%, #b1b1b1);
+  background: linear-gradient(180deg, #d5d5d5, #bdbdbd 60%, #b1b1b1);
 }
 .result{
   background:#f6f6f6;
@@ -245,7 +236,6 @@ select:focus{
 /* NaN barrier */
 .nan-block{
   margin-top:.8rem;
-  /* hide by default; the script toggles the [hidden] attribute */
   display: none;
   gap:.6rem;
   align-items:center;
@@ -254,12 +244,7 @@ select:focus{
   border-radius:8px;
   padding:.6rem .7rem;
 }
-/* Show the block only when the element does NOT have the [hidden] attribute.
-   This keeps the presentation controlled by the HTML/JS hidden property instead
-   of author styles overriding it. */
-.nan-block:not([hidden]){
-  display: flex;
-}
+.nan-block:not([hidden]){ display: flex; }
 .nan-block img{ width:32px; height:32px; image-rendering: pixelated; }
 .error{ color:#b00020; font-weight:700; }
 
@@ -278,7 +263,7 @@ select:focus{
 }
 .site-footer a:hover{ border-color: var(--accent-dark); }
 
-/* A11y helpers */
+/* A11y helper */
 .sr-only{
   position:absolute !important;
   height:1px;width:1px;
@@ -286,7 +271,7 @@ select:focus{
   white-space:nowrap;border:0;padding:0;margin:-1px;
 }
 
-/* Narrow screens: stack inventory slots */
+/* Narrow screens */
 @media (max-width: 900px){
   .inventory{ grid-template-columns: 1fr; }
 }
